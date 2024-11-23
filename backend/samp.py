@@ -164,86 +164,104 @@ import os
 #     else:
 #         print("Starting video stream...")
 #         socketio.run(app, host="0.0.0.0", port=5000)
-import cv2
-import base64
+
+# import cv2
+# import base64
+# import os
+# from flask import Flask
+# from flask_socketio import SocketIO
+# from flask_cors import CORS
+#
+# # Flask setup
+# app = Flask(__name__)
+# CORS(app)
+# socketio = SocketIO(app, cors_allowed_origins="*")
+#
+# # YOLO Model setup
+# model_weights = 'project_files/yolov4_tiny.weights'
+# model_config = 'project_files/yolov4_tiny.cfg'
+# classes_file = 'project_files/obj.names'
+#
+# if not all(os.path.exists(file) for file in [model_weights, model_config, classes_file]):
+#     raise FileNotFoundError("YOLO model files are missing! Ensure 'project_files/' has all required files.")
+#
+# net = cv2.dnn.readNet(model_weights, model_config)
+# model = cv2.dnn_DetectionModel(net)
+# model.setInputParams(scale=1 / 255, size=(416, 416), swapRB=True)
+#
+# # Load class names
+# with open(classes_file, 'r') as f:
+#     classes = f.read().strip().splitlines()
+#
+# # Initialize webcam
+# camera = cv2.VideoCapture(0)
+#
+#
+# def process_frame_yolo(frame):
+#     """Process a single frame with YOLO object detection."""
+#     class_ids, scores, boxes = model.detect(frame, confThreshold=0.6, nmsThreshold=0.4)
+#     for (class_id, score, box) in zip(class_ids, scores, boxes):
+#         cv2.rectangle(frame, (box[0], box[1]), (box[0] + box[2], box[1] + box[3]), (0, 255, 0), 2)
+#         label = f"{classes[class_id]}: {score:.2f}"
+#         cv2.putText(frame, label, (box[0], box[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+#     return frame
+#
+#
+# @app.route('/')
+# def index():
+#     return "Flask YOLO Backend is Running!"
+#
+#
+# def generate_processed_frames():
+#     """Capture, process, and emit video frames."""
+#     while True:
+#         success, frame = camera.read()
+#         if not success:
+#             print("Failed to capture video frame")
+#             break
+#
+#         # Process the frame using YOLO
+#         processed_frame = process_frame_yolo(frame)
+#
+#         # Encode processed frame as JPEG
+#         _, buffer = cv2.imencode('.jpg', processed_frame)
+#         frame_base64 = base64.b64encode(buffer).decode('utf-8')
+#
+#         # Emit the processed frame to the frontend
+#         socketio.emit('video_stream', {'frame': frame_base64})
+#
+#         # Add delay to control frame rate (30 FPS)
+#         socketio.sleep(0.03)
+#
+#
+# @socketio.on('start_stream')
+# def start_stream():
+#     """Handle start streaming event."""
+#     generate_processed_frames()
+#
+#
+# @socketio.on('disconnect')
+# def handle_disconnect():
+#     """Handle client disconnect."""
+#     print("Client disconnected")
+#
+#
+# if __name__ == '__main__':
+#     socketio.run(app, host='0.0.0.0', port=5000)
+
+from flask import Flask, send_from_directory
 import os
-from flask import Flask
-from flask_socketio import SocketIO
-from flask_cors import CORS
 
-# Flask setup
 app = Flask(__name__)
-CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
 
-# YOLO Model setup
-model_weights = 'project_files/yolov4_tiny.weights'
-model_config = 'project_files/yolov4_tiny.cfg'
-classes_file = 'project_files/obj.names'
+# Directory where videos are saved
+PROCESSED_FOLDER = os.path.join(app.root_path, 'static/processed_videos')
 
-if not all(os.path.exists(file) for file in [model_weights, model_config, classes_file]):
-    raise FileNotFoundError("YOLO model files are missing! Ensure 'project_files/' has all required files.")
+@app.route('/video/<filename>')
+def serve_video(filename):
+    # Send the video file from the specified directory
+    return send_from_directory(PROCESSED_FOLDER, filename)
 
-net = cv2.dnn.readNet(model_weights, model_config)
-model = cv2.dnn_DetectionModel(net)
-model.setInputParams(scale=1 / 255, size=(416, 416), swapRB=True)
+if __name__ == "__main__":
+    app.run(debug=True)
 
-# Load class names
-with open(classes_file, 'r') as f:
-    classes = f.read().strip().splitlines()
-
-# Initialize webcam
-camera = cv2.VideoCapture(0)
-
-
-def process_frame_yolo(frame):
-    """Process a single frame with YOLO object detection."""
-    class_ids, scores, boxes = model.detect(frame, confThreshold=0.6, nmsThreshold=0.4)
-    for (class_id, score, box) in zip(class_ids, scores, boxes):
-        cv2.rectangle(frame, (box[0], box[1]), (box[0] + box[2], box[1] + box[3]), (0, 255, 0), 2)
-        label = f"{classes[class_id]}: {score:.2f}"
-        cv2.putText(frame, label, (box[0], box[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-    return frame
-
-
-@app.route('/')
-def index():
-    return "Flask YOLO Backend is Running!"
-
-
-def generate_processed_frames():
-    """Capture, process, and emit video frames."""
-    while True:
-        success, frame = camera.read()
-        if not success:
-            print("Failed to capture video frame")
-            break
-
-        # Process the frame using YOLO
-        processed_frame = process_frame_yolo(frame)
-
-        # Encode processed frame as JPEG
-        _, buffer = cv2.imencode('.jpg', processed_frame)
-        frame_base64 = base64.b64encode(buffer).decode('utf-8')
-
-        # Emit the processed frame to the frontend
-        socketio.emit('video_stream', {'frame': frame_base64})
-
-        # Add delay to control frame rate (30 FPS)
-        socketio.sleep(0.03)
-
-
-@socketio.on('start_stream')
-def start_stream():
-    """Handle start streaming event."""
-    generate_processed_frames()
-
-
-@socketio.on('disconnect')
-def handle_disconnect():
-    """Handle client disconnect."""
-    print("Client disconnected")
-
-
-if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=5000)

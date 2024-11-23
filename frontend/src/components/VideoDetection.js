@@ -72,12 +72,16 @@ function VideoDetection() {
         <div style={{ marginTop: '20px' }}>
           <h3>Processed Video</h3>
           <ReactPlayer
-            url={processedVideo}
-            playing={true}
-            controls={true}
-            width="640px"
-            height="360px"
-          />
+          url={processedVideo}
+          playing={true}
+          controls={true}
+          width="640px"
+          height="360px"
+          onError={(error) => {
+            console.error('Video playback error:', error);
+            // Handle the error, e.g., display an error message
+          }}
+        />
           <br />
           <a href={processedVideo} download="processed_video.mp4">Download Processed Video</a>
         </div>
