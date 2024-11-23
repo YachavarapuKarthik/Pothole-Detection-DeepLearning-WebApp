@@ -1,3 +1,4 @@
+// App.js
 import './App.css';
 import NavBar from './components/NavBar'
 import ImageDetection from './components/ImageDetection'
@@ -11,7 +12,7 @@ function App() {
         <Routes>
         <Route path="/image-detection" element = {<ImageDetection/>}/>
         <Route path="/video-detection" element ={<VideoDetection/>}/>
-        <Route path="/real-time-detection" element ={<RealTimeDetection/>}/>
+        <Route path="/live-detection" element ={<RealTimeDetection/>}/>
         </Routes>
         </Router>
         );
