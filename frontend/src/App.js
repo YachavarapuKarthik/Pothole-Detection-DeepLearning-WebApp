@@ -9,6 +9,7 @@ function App() {
   return (
         <Router>
         <NavBar/>
+        <h1>Home page</h1>
         <Routes>
         <Route path="/image-detection" element = {<ImageDetection/>}/>
         <Route path="/video-detection" element ={<VideoDetection/>}/>
