@@ -26,7 +26,7 @@ function VideoDetection() {
     formData.append('video', selectedVideo); // Append the selected video file to form data
 
     try {
-      const response = await fetch('http://localhost:5000/upload-video', {
+      const response = await fetch('http://192.168.1.6:5000/upload-video', {
         method: 'POST',
         body: formData, // Send the video file to the Flask backend
       });

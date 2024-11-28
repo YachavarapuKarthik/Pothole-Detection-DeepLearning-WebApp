@@ -34,7 +34,8 @@ with open(classes_file, 'r') as f:
     classes = f.read().strip().splitlines()
 
 # Initialize webcam
-camera = cv2.VideoCapture(0)
+#camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture('http://192.168.1.7:8080/video')
 
 def process_frame_yolo(frame):
     """Process a single frame with YOLO object detection."""

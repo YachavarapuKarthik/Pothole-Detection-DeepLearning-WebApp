@@ -24,7 +24,7 @@ function ImageDetection() {
     formData.append('image', selectedImage);
 
     try {
-      const response = await fetch('http://localhost:5000/upload-image', {
+      const response = await fetch('http://192.168.1.6:5000/upload-image', {
         method: 'POST',
         body: formData,
       });

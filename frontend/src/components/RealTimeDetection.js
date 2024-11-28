@@ -152,7 +152,7 @@ const RealTimeDetection = () => {
 
     useEffect(() => {
         // Connect to backend WebSocket
-        const socket = io('http://localhost:5000');
+        const socket = io('http://192.168.1.6:5000');
 
         // Listen for video frames
         socket.on('video_stream', (data) => {
