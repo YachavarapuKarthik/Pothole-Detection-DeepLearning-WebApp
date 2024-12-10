@@ -1,7 +1,11 @@
 /* General styling for the navbar */
 .navbar {
   background-color: #333;
-  padding: 10px 20px;
+  padding: 15px 0;
+  width: 100%;
+  /* position: fixed;
+  top: 0; */
+
 }
 
 .navin {
@@ -12,12 +16,14 @@
 
 .logo {
   color: #fff;
-  font-size: 24px;
+  font-size: 30px;
+  margin-left: 20px;
 }
 
 .links {
   display: flex;
   gap: 20px;
+  margin-right: 20px;
 }
 
 .links a {
@@ -25,6 +31,7 @@
   text-decoration: none;
   padding: 8px 16px;
   transition: background 0.3s ease;
+  font-size: 20px;
 }
 
 .links a:hover {
@@ -38,6 +45,7 @@
   font-size: 28px;
   color: white;
   cursor: pointer;
+  margin-right: 15px;
 }
 
 /* Responsive adjustments */

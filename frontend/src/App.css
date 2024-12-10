@@ -17,3 +17,275 @@
 .App-link {
   color: #61dafb;
 }
+/* image Detection/////////////////////////////////////////////////////////////////////////////////////*/
+/* General Page Styling */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #6a1b9a, #9c27b0);
+  color: #fff;
+  text-align: center;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+  height: 1500px;
+  /* animation: fadeIn 0.1s ease-in-out; */
+}
+
+h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 100px;
+}
+
+/* Hide default file input */
+.file-input {
+  display: none;
+}
+
+/* Custom "Choose File" button styling */
+.custom-file-label {
+  display: inline-block;
+  background-color: #512da8;
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s, transform 0.2s;
+  margin-top: 17px;
+  margin-right: 10px;
+}
+
+.custom-file-label:hover {
+  background: #673ab7;
+  transform: scale(1.05);
+}
+
+/* Form Buttons */
+button {
+  background-color: #512da8;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s, transform 0.2s;     
+  vertical-align: middle; /* Ensure vertical alignment with input */
+}
+
+button:hover {
+  background: #673ab7;
+  transform: scale(1.1);
+}
+
+/* Image Display Section */
+.box {
+  border: 2px solid #7e57c2;
+  border-radius: 8px;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  width: 90%;
+  height: 450px;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin: 1rem auto;
+}
+
+.image {
+  width: 100%;
+  max-width: 550px;
+  height: 350px;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  transition: transform 0.3s;
+}
+
+.image:hover {
+  transform: scale(1.05);
+}
+
+/* Animation on Page Load */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+ 
+}
+/* General Styling for VideoDetection Component /////////////////////////////////////////////////////////////////////*/
+/* General Styling for VideoDetection Component */
+/* General Styling for VideoDetection Component */
+.VideoDetection {
+  text-align: center;
+  color: #fff;
+  /* animation: fadeIn 0.2s ease-in; */
+}
+
+.VideoDetection h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  color: #f3e5f5;
+}
+
+/* Styling the form and input elements */
+.VideoDetection form {
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Align items vertically */
+  /* Add space between buttons */
+  margin-bottom: 20px;
+}
+
+.VideoDetection input[type="file"] {
+  display: none;
+}
+
+.VideoDetection .custom-file-label {
+  display: inline-block;
+  background-color: #512da8;
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s, transform 0.2s;
+  margin-top: 17px;
+  margin-right: 10px;
+}
+
+.VideoDetection .custom-file-label:hover {
+  background: #673ab7;
+  transform: scale(1.05);
+}
+
+.VideoDetection button {
+  background-color: #512da8;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s, transform 0.2s;   
+  margin-top: 16px;  
+  vertical-align: middle; /* Ensure vertical alignment with input */
+}
+
+.VideoDetection button:hover {
+  background: #673ab7;
+  transform: scale(1.05);
+}
+
+/* Video preview and processed video sections */
+.VideoDetection video,
+.VideoDetection .react-player {
+  margin: 20px auto;
+  display: block;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  background-color: black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 95%;
+  max-width: 550px;
+}
+
+.VideoDetection h3 {
+  font-size: 1.5rem;
+  color: #d1c4e9;
+  margin-top: 20px;
+}
+
+.VideoDetection a {
+  text-decoration: none;
+  color: #f3e5f5;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+
+.VideoDetection a:hover {
+  color: #ba68c8;
+}
+.procontainer h3{
+  margin-top: 70px;
+}
+.Dcontainer{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.down{
+  width: 150px;
+  height: auto;
+  padding: 10px 25px;
+  border-radius: 8px;
+  background-color:#512da8 ;
+  color: white;
+  line-height:26px;
+  transition: background 0.3s, transform 0.2s; 
+  font-size: 1.2rem;  
+  /* font-weight: 100; */
+}
+.down:hover{
+  background: #673ab7;
+  transform: scale(1.05);
+}
+.loading-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #8e24aa;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-container p {
+  color: #f3e5f5;
+  margin-top: 10px;
+  font-size: 1rem;
+}
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    scale: 0.7;
+  }
+  to {
+    opacity: 1;
+    scale:1;
+  }
+}
