@@ -21,3 +21,22 @@ function App() {
 }
 
 export default App;
+
+//import React from 'react';
+//
+//const App = () => {
+//  const videoSrc = 'http://127.0.0.1:5000/api/video/tested';
+//
+//  return (
+//    <div>
+//      <h1>React Video Player</h1>
+//      <video width="640" height="360" controls>
+//        <source src={videoSrc} type="video/mp4" />
+//        Your browser does not support the video tag.
+//      </video>
+//    </div>
+//  );
+//};
+//
+//export default App;
+

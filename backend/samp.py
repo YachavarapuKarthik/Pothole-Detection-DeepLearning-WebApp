@@ -249,19 +249,33 @@ import os
 # if __name__ == '__main__':
 #     socketio.run(app, host='0.0.0.0', port=5000)
 
+# from flask import Flask, send_from_directory
+# import os
+#
+# app = Flask(__name__)
+#
+# # Directory where videos are saved
+# PROCESSED_FOLDER = os.path.join(app.root_path, 'static/processed_videos')
+#
+# @app.route('/video/<filename>')
+# def serve_video(filename):
+#     # Send the video file from the specified directory
+#     return send_from_directory(PROCESSED_FOLDER, filename)
+#
+# if __name__ == "__main__":
+#     app.run(debug=True)
+#
+
+
+
 from flask import Flask, send_from_directory
-import os
 
 app = Flask(__name__)
 
-# Directory where videos are saved
-PROCESSED_FOLDER = os.path.join(app.root_path, 'static/processed_videos')
+# Serve the specific video file 'tested.mp4'
+@app.route('/api/video/tested')
+def serve_tested_video():
+    return send_from_directory('uploads', 'tested.mp4')
 
-@app.route('/video/<filename>')
-def serve_video(filename):
-    # Send the video file from the specified directory
-    return send_from_directory(PROCESSED_FOLDER, filename)
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
-
