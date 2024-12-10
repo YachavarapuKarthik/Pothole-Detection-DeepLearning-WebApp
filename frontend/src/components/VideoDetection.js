@@ -1,9 +1,7 @@
 import React, { useState, useRef } from 'react';
-// import './VideoDetection.css';
 
 function VideoDetection() {
   const [selectedVideo, setSelectedVideo] = useState(null);
-  //const videoSrc = "http://localhost:5000/upload-video"
   const [processedVideo, setProcessedVideo] = useState(null);
   const [loading, setLoading] = useState(false); // For the loading spinner
   const processedSectionRef = useRef(null); // Reference for the processed section
@@ -40,12 +38,9 @@ function VideoDetection() {
       });
 
       if (response.ok) {
-        console.log("i got video");
-        const blob = await response.blob(); // Get the processed video as a blob
-        const videoUrl = URL.createObjectURL(blob); // Create a URL for the processed video
-        setProcessedVideo(videoUrl);
-        console.log(processedVideo)
-        // Display the processed video with the file name
+        const blob = await response.blob();
+        const videoUrl = URL.createObjectURL(blob);
+        setProcessedVideo(videoUrl); // Set the processed video
       } else {
         const errorResponse = await response.json();
         alert("Video upload failed: " + (errorResponse.message || "Unknown error"));
@@ -86,26 +81,25 @@ function VideoDetection() {
         </div>
       )}
 
-{/* Show processed video once received */}
-      {processedVideo && (
-        <div style={{ marginTop: '20px' }}>
-          <h3>Processed Video</h3>
-          {/* <ReactPlayer
-          url={processedVideo}
-          playing={true}
-          controls={true}
-          width="640px"
-          height="360px"
-          onError={(error) => {
-            console.error('Video playback error:', error);
-            // Handle the error, e.g., display an error message
-          }}
-        /> */}
-        
-          <br />
-          <a href={processedVideo} download="processed_video.mp4">Download Processed Video</a>
-        </div>
-      )}
+      {/* Processed Section */}
+      <div className="procontainer" ref={processedSectionRef} style={{ marginTop: '20px' }}>
+        {/* Show the heading only if loading or processedVideo exists */}
+        {(loading || processedVideo) && <h3>Processed Video</h3>}
+        {loading ? (
+          <div className="loading-container">
+            <div className="spinner"></div>
+            <p>Processing video, please wait...</p>
+          </div>
+        ) : (
+          processedVideo && (
+            <div className="Dcontainer">
+              <a href={processedVideo} download="processed_video.mp4" className="down">
+                Download Video
+              </a>
+            </div>
+          )
+        )}
+      </div>
     </div>
   );
 }
