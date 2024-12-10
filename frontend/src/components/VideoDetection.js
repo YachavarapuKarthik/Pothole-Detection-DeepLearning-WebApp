@@ -81,6 +81,7 @@ function VideoDetection() {
         </div>
       )}
 
+
       {/* Processed Section */}
       <div className="procontainer" ref={processedSectionRef} style={{ marginTop: '20px' }}>
         {/* Show the heading only if loading or processedVideo exists */}
