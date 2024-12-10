@@ -3,7 +3,7 @@ import cv2
 import json
 import base64
 import numpy as np
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, send_from_directory
 from flask_socketio import SocketIO
 from flask_cors import CORS
 
@@ -14,6 +14,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Ensure directories exist
 UPLOAD_FOLDER = 'uploads'
+RESULTS_FOLDER = 'results'
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
@@ -34,8 +35,8 @@ with open(classes_file, 'r') as f:
     classes = f.read().strip().splitlines()
 
 # Initialize webcam
-#camera = cv2.VideoCapture(0)
-camera = cv2.VideoCapture('http://192.168.1.7:8080/video')
+camera = cv2.VideoCapture(0)
+#camera = cv2.VideoCapture('http://192.168.1.7:8080/video')
 
 def process_frame_yolo(frame):
     """Process a single frame with YOLO object detection."""
@@ -108,6 +109,27 @@ def upload_video():
         return send_file(processed_path, mimetype='video/mp4')
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+# @app.route('/upload-video', methods=['POST'])
+# def upload_video():
+#     """Handle video uploads and return processed output."""
+#     if 'video' not in request.files:
+#         return jsonify({'message': 'No video provided'}), 400
+#
+#     file = request.files['video']
+#     video_path = os.path.join(UPLOAD_FOLDER, file.filename)
+#     file.save(video_path)
+#
+#     try:
+#         # Process the video and get the processed file name
+#         processed_filename = process_video(video_path)
+#
+#         # Send the processed video using send_from_directory
+#         return send_from_directory(RESULTS_FOLDER, processed_filename, mimetype='video/mp4')
+#
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
 
 
 def generate_processed_frames():

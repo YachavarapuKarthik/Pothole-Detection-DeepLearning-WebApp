@@ -4,6 +4,7 @@ import ReactPlayer from 'react-player';
 
 function VideoDetection() {
   const [selectedVideo, setSelectedVideo] = useState(null);
+  //const videoSrc = "http://localhost:5000/upload-video"
   const [processedVideo, setProcessedVideo] = useState(null);
 
   // Handle video selection
@@ -26,13 +27,14 @@ function VideoDetection() {
     formData.append('video', selectedVideo); // Append the selected video file to form data
 
     try {
-      const response = await fetch('http://192.168.1.6:5000/upload-video', {
+      const response = await fetch('http://localhost:5000/upload-video', {
         method: 'POST',
         body: formData, // Send the video file to the Flask backend
       });
 
       if (response.ok) {
-        console.log("i got video");
+        alert("i got video");
+//        const data = await response.json()
         const blob = await response.blob(); // Get the processed video as a blob
         const videoUrl = URL.createObjectURL(blob); // Create a URL for the processed video
         setProcessedVideo(videoUrl);
@@ -71,17 +73,10 @@ function VideoDetection() {
       {processedVideo && (
         <div style={{ marginTop: '20px' }}>
           <h3>Processed Video</h3>
-          <ReactPlayer
-          url={processedVideo}
-          playing={true}
-          controls={true}
-          width="640px"
-          height="360px"
-          onError={(error) => {
-            console.error('Video playback error:', error);
-            // Handle the error, e.g., display an error message
-          }}
-        />
+          <video width="640" height="480" controls>
+            <source src={processedVideo} type={selectedVideo.type} />
+            Your browser does not support the video tag.
+          </video>
           <br />
           <a href={processedVideo} download="processed_video.mp4">Download Processed Video</a>
         </div>
