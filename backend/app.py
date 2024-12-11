@@ -1,5 +1,5 @@
 import os # For file path manipulation and directory management
-import cv2  # For image and video processing
+import cv2  # type: ignore # For image and video processing
 import json  # For handling JSON data
 import base64  # For encoding video frames as base64 strings
 import numpy as np  # For numerical operations
