@@ -95,21 +95,27 @@ header.home-header {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    gap: 20px; /* Increased gap between buttons */
 }
 
 .navigation button {
-    font-size: 1rem;
-    padding: 10px 20px;
-    border: 1px solid #000;
-    border-radius: 5px;
+    font-size: 1.25rem; /* Increase font size */
+    padding: 15px 30px; /* Increase padding for larger buttons */
+    border: 2px solid rgb(128, 0, 128); /* Purple border with transparency */
+    border-radius: 8px; /* Larger border radius for a more rounded look */
     cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    background-color: rgba(108, 2, 76, 0.84); /* Transparent purple background */
+    backdrop-filter: blur(20px); /* Apply blur effect for the frosted glass effect */
+    transition: transform 0.3s ease, background-color 0.3s ease, border 0.3s ease;
+    color: white; /* Ensure text is white */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
 }
 
+/* Hover Effect */
 .navigation button:hover {
-    transform: scale(1.05);
-    background-color: #007BFF;
+    transform: scale(1.1); /* Slightly more scaling effect */
+    background-color: rgba(0, 123, 255, 0.6); /* Blue background on hover */
+    border: 2px solid rgba(0, 123, 255, 0.6); /* Blue border on hover */
     color: white;
 }
 

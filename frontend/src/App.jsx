@@ -6,6 +6,7 @@ import VideoDetection from './components/VideoDetection';  // Import the VideoDe
 import RealTimeDetection from './components/RealTimeDetection';  // Import the RealTimeDetection component for live detection functionality
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';  // Import React Router components to handle routing between different pages
 import './App.css';  // Import the CSS file for styling the components
+import Footer from './components/Footer';
 
 // The App component is the root component for the application
 const App = () => {
@@ -29,7 +30,9 @@ const App = () => {
         {/* Route for live detection, accessible at "/live-detection" */}
         <Route path="/live-detection" element={<RealTimeDetection />} />
       </Routes>
+      <Footer/>
     </Router>
+    
   );
 };
 

@@ -29,7 +29,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center; */
-  height: 1500px;
+  height: 100%;
   /* animation: fadeIn 0.1s ease-in-out; */
 }
 
@@ -290,3 +290,20 @@ button:hover {
   }
 }
 
+/* Footer Styling */
+.footer {
+  background-color: black; /* Black background */
+  color: white; /* White text color */
+  text-align: center; /* Center the text */
+  padding: 10px 0; /* Padding for the footer */
+  position: fixed; /* Fix the footer at the bottom */
+  left: 0;
+  bottom: 0;
+  width: 100%; /* Full width */
+  font-size: 1rem; /* Font size */
+  /* border-top: 3px solid white; White line above the footer */
+}
+
+.footer p {
+  margin: 0; /* Remove default margin */
+}
