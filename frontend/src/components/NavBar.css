@@ -1,23 +1,35 @@
 /* General styling for the navbar */
 .navbar {
-  background-color: #333;
-  padding: 15px 0;
-  width: 100%;
-  /* position: fixed;
-  top: 0; */
-
+  background-color: rgba(0, 0, 0, 0.2); /* More transparent background for glass effect */
+  padding: 15px;
+  width: 80%; /* Set width to 80% of the parent container */
+  border-radius: 50px; /* Rounded corners like macOS taskbar */
+  backdrop-filter: blur(50px); /* Optional: adds blur effect for macOS-like background */
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1); /* Slight shadow for depth */
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  position: sticky; /* Makes the navbar sticky */
+  top: 0; /* Ensures the navbar sticks to the top of the page */
+  z-index: 1000; /* Makes sure the navbar stays above other content */
+  margin: 0 auto; /* Centers the navbar horizontally */
+  margin-top: 20px; /* Adds top margin to shift the navbar down */
 }
+
+
 
 .navin {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%; /* Ensure navin spans the entire navbar */
+  max-width: 1200px; /* Optionally set a max-width for the navbar to prevent it from stretching too wide */
 }
 
 .logo {
   color: #fff;
   font-size: 30px;
   margin-left: 20px;
+  transition: text-shadow 0.3s ease; /* Transition for glowing effect */
 }
 
 .links {
@@ -30,13 +42,16 @@
   color: white;
   text-decoration: none;
   padding: 8px 16px;
-  transition: background 0.3s ease;
   font-size: 20px;
+  transition: background 0.3s ease, box-shadow 0.3s ease; /* Transition for glowing effect */
+  border-radius: 4px;
 }
 
+/* Glowing effect on hover */
 .links a:hover {
-  background-color: #555;
-  border-radius: 4px;
+  
+  text-shadow: 0 0 10px #a2b6df, 0 0 20px #a2b6df, 0 0 30px #a2b6df, 0 0 40px #a2b6df, 0 0 50px #a2b6df; /* Purple glow around text */
+
 }
 
 /* Hamburger menu for smaller screens */
@@ -56,18 +71,18 @@
     position: absolute;
     top: 50px;
     right: 20px;
-    background-color: #333;
+    background-color: rgba(0, 0, 0, 0.8); /* Slightly darker transparent background for mobile */
     width: 200px;
     border-radius: 8px;
     padding: 10px;
   }
 
   .links.open {
-    display: flex;
+    display: flex; /* Show the links when hamburger menu is clicked */
   }
 
   .hamburger {
-    display: block;
+    display: block; /* Show hamburger icon on small screens */
   }
 
   .links a {
