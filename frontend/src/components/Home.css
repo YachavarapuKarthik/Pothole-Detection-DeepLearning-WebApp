@@ -1,13 +1,13 @@
-/* Home.css */
+/* Global Reset */
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
     line-height: 1.4;
     box-sizing: border-box;
-    
 }
 
+/* Main Container */
 .home-container {
     padding: 20px;
     max-width: 1200px;
@@ -15,6 +15,7 @@ body {
     animation: fadeIn 1s ease-in-out;
 }
 
+/* Header Styling */
 header.home-header {
     text-align: center;
     margin-bottom: 40px;
@@ -29,23 +30,53 @@ header.home-header {
     font-size: 1.5rem;
 }
 
-.about-section,
-.features,
-.navigation {
+/* Highlight Section */
+.highlight-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.highlight-text {
+    flex: 1;
+    padding: 20px;
+}
+
+.animated-text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.highlight-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.highlight-svg {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+/* About Section and Features Styling */
+.about-features-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
     margin-bottom: 30px;
-    text-align: center;
 }
 
-.about-section h2,
-.features h2,
-.navigation h2 {
-    font-size: 2.4rem;
-    margin-bottom: 15px;
+.about-section {
+    padding: 20px;
 }
 
-.about-section p {
-    font-size: 1.5rem;
-    margin: 0 15px;
+.features {
+    padding: 20px;
+    /* background-color: #f9f9f9; */
+    border-radius: 8px;
 }
 
 .features ul {
@@ -59,11 +90,12 @@ header.home-header {
     margin: 8px 0;
 }
 
+/* Navigation Styling */
 .navigation .nav-buttons {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
 }
 
 .navigation button {
@@ -72,37 +104,84 @@ header.home-header {
     border: 1px solid #000;
     border-radius: 5px;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .navigation button:hover {
     transform: scale(1.05);
+    background-color: #007BFF;
+    color: white;
 }
 
-
-
-/* Animation */
-@keyframes fadeIn {
-    from {
+/* Animation Effects */
+@keyframes slideInAndScale {
+    0% {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateX(-100%) scale(0.8);
     }
-    to {
+    50% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateX(10%) scale(1.05);
     }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) translateY(-50px);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.2) translateY(20px);
+    }
+    100% {
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Apply the slide-in animation to the static text */
+.static-text {
+    animation: slideInAndScale 1s ease-out forwards;
+}
+
+/* Apply bounce-in animation with delay for other sections */
+.about-section, .features, .navigation {
+    animation: bounceIn 1s ease-out 0.5s forwards;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .highlight-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .highlight-text {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .highlight-image {
+        margin-top: 20px;
+    }
+
     .home-header h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
 
     .home-header p,
     .about-section p,
     .features li {
         font-size: 0.9rem;
+    }
+
+    .about-features-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
 
     .navigation .nav-buttons {
