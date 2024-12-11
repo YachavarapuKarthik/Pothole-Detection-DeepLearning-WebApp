@@ -40,9 +40,7 @@ function Home() {
             </section>
 
             {/* Footer Section */}
-            <footer className="home-footer">
-                <p>&copy; 2024 Developed by [Your Team Name]. All rights reserved.</p>
-            </footer>
+           
         </div>
     );
 }
