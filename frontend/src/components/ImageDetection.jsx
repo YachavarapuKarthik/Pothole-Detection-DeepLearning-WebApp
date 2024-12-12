@@ -98,6 +98,7 @@ function ImageDetection() {
 
       {/* Display the processed image after successful upload */}
       {processedImage && (
+        <>
         <div className="box" ref={processedImageRef}>
           <h3>Processed Image:</h3>
           <img
@@ -106,8 +107,16 @@ function ImageDetection() {
             alt="Processed Preview"  // Alt text for accessibility
           />
         </div>
+        <div className="Dcontainer">
+              <a href={processedImage} download="processed_image.jpg" className="down">  {/* Download link for processed video */}
+                Download Image
+              </a>
+            </div>
+        </>
+        
       )}
     </div>
+    
   );
 }
 

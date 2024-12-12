@@ -35,8 +35,8 @@ with open(classes_file, 'r') as f:  # Open file containing class names
     classes = f.read().strip().splitlines()  # Read and split class names into a list
 
 # Initialize webcam for real-time detection
-# camera = cv2.VideoCapture(0)  # Open default webcam
-camera = cv2.VideoCapture('http://192.168.170.158:8080/video')
+camera = cv2.VideoCapture(0)  # Open default webcam
+# camera = cv2.VideoCapture('http://192.168.170.158:8080/video')
 
 # Function to process a single frame with YOLO ( Base Function for detection pothole)
 def process_frame_yolo(frame):
