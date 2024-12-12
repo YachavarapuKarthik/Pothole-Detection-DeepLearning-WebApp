@@ -1,8 +1,6 @@
 import os # For file path manipulation and directory management
 import cv2  # type: ignore # For image and video processing
-import json  # For handling JSON data
 import base64  # For encoding video frames as base64 strings
-import numpy as np  # For numerical operations
 from flask import Flask, request, jsonify, send_file, send_from_directory  # For server and request handling
 from flask_socketio import SocketIO  # For enabling WebSockets for real-time streaming
 from flask_cors import CORS  # For allowing cross-origin requests
@@ -37,7 +35,8 @@ with open(classes_file, 'r') as f:  # Open file containing class names
     classes = f.read().strip().splitlines()  # Read and split class names into a list
 
 # Initialize webcam for real-time detection
-camera = cv2.VideoCapture(0)  # Open default webcam
+# camera = cv2.VideoCapture(0)  # Open default webcam
+camera = cv2.VideoCapture('http://192.168.170.158:8080/video')
 
 # Function to process a single frame with YOLO ( Base Function for detection pothole)
 def process_frame_yolo(frame):

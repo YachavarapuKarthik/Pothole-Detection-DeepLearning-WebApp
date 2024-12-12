@@ -18,7 +18,7 @@ const NavBar = () => {
   return (
     <div className="navbar">  {/* Main container for the navbar */}
       <div className="navin">  {/* Inner container to hold logo, links, and hamburger icon */}
-        <div className="logo">Pothole</div>  {/* Display the logo text */}
+        <div className="logo">Pothole Detector</div>  {/* Display the logo text */}
         
         {/* Links container with dynamic class based on menu state */}
         <div className={`links ${isOpen ? 'open' : ''}`}>
