@@ -1,47 +1,97 @@
 import React, { useEffect, useRef } from 'react';
-import io from 'socket.io-client';
 
 const RealTimeDetection = () => {
-    const canvasRef = useRef(null);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null); // For capturing video frame
+  const processedCanvasRef = useRef(null); // For showing processed frame
 
-    useEffect(() => {
-        // Connect to backend WebSocket
-        const socket = io('http://localhost:5000/');
+  useEffect(() => {
+    const video = videoRef.current;
+    const captureCanvas = canvasRef.current;
+    const processedCanvas = processedCanvasRef.current;
+    const captureCtx = captureCanvas.getContext('2d');
+    const processedCtx = processedCanvas.getContext('2d');
 
-        // Handle connection errors
-        socket.on('connect_error', (error) => {
-            console.error("Connection error: ", error);
-            alert('Failed to connect to the server');
-        });
+    let isProcessing = false;
 
-        // Listen for video frames
-        socket.on('video_stream', (data) => {
-            const frame = data.frame;
+    // Access webcam
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then((stream) => {
+        video.srcObject = stream;
+        video.play();
 
-            // Get the canvas context and draw the frame
-            const canvas = canvasRef.current;
-            const ctx = canvas.getContext('2d');
-            const img = new Image();
-            img.src = `data:image/jpeg;base64,${frame}`;
-            img.onload = () => {
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            };
-        });
+        // Periodically capture and send frame
+        const intervalId = setInterval(() => {
+          if (isProcessing) return;
+          isProcessing = true;
 
-        // Start the stream
-        socket.emit('start_stream');
+          // Draw current frame to hidden canvas
+          captureCtx.drawImage(video, 0, 0, captureCanvas.width, captureCanvas.height);
 
-        return () => {
-            socket.disconnect();
-        };
-    }, []);
+          captureCanvas.toBlob((blob) => {
+            const formData = new FormData();
+            formData.append('image', blob, 'frame.png');
 
-    return (
-        <div>
-            <h1>Real-Time Video Stream</h1>
-            <canvas ref={canvasRef} width="640" height="480" />
-        </div>
-    );
+            fetch('http://192.168.1.8:5000/upload-image', {
+              method: 'POST',
+              body: formData,
+            })
+              .then((res) => res.blob())
+              .then((processedBlob) => {
+                const img = new Image();
+                img.onload = () => {
+                  processedCtx.drawImage(img, 0, 0, processedCanvas.width, processedCanvas.height);
+                  isProcessing = false;
+                };
+                img.src = URL.createObjectURL(processedBlob);
+              })
+              .catch((err) => {
+                console.error('Error sending/receiving image:', err);
+                isProcessing = false;
+              });
+          }, 'image/png');
+        }, 30); // Adjust this for desired FPS (e.g. 300ms = ~3 FPS)
+
+        
+      })
+      .catch((error) => {
+        console.error('Webcam error:', error);
+        alert('Could not access the webcam.');
+      });
+  }, []);
+
+  return (
+    <div style={{ padding: '20px' }}>
+      <h1>Real-Time Pothole Detection</h1>
+
+      {/* Live Video Feed */}
+      <video
+        ref={videoRef}
+        width="640"
+        height="480"
+        autoPlay
+        playsInline
+        style={{ borderRadius: '10px', marginBottom: '10px' }}
+      />
+
+      {/* Hidden Canvas to capture video frame */}
+      <canvas
+        ref={canvasRef}
+        width="640"
+        height="480"
+        style={{ display: 'none' }}
+      />
+
+      {/* Processed Output Canvas */}
+      <h3>Processed Frame</h3>
+      <canvas
+        ref={processedCanvasRef}
+        width="640"
+        height="480"
+        style={{ border: '2px solid #ccc', borderRadius: '10px' }}
+      />
+    </div>
+  );
 };
 
 export default RealTimeDetection;

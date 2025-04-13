@@ -35,7 +35,7 @@ with open(classes_file, 'r') as f:  # Open file containing class names
     classes = f.read().strip().splitlines()  # Read and split class names into a list
 
 # Initialize webcam for real-time detection
-camera = cv2.VideoCapture(0)  # Open default webcam
+#camera = cv2.VideoCapture(0)  # Open default webcam
 # camera = cv2.VideoCapture('http://192.168.170.158:8080/video')
 
 # Function to process a single frame with YOLO ( Base Function for detection pothole)
@@ -110,39 +110,39 @@ def upload_video():
 
 
 # Process each frame from live camera
-def generate_processed_frames():
-    """Capture, process, and emit video frames."""
-    while True: # Continous frame detection 
-        success, frame = camera.read() # Reads frames through camera
-        if not success: # If no camera device is detected
-            print("Failed to capture video frame")
-            break # Stops the Frame detection
+# def generate_processed_frames():
+#     """Capture, process, and emit video frames."""
+#     while True: # Continous frame detection 
+#         success, frame = camera.read() # Reads frames through camera
+#         if not success: # If no camera device is detected
+#             print("Failed to capture video frame")
+#             break # Stops the Frame detection
 
-        # Process the frame using YOLO
-        processed_frame = process_frame_yolo(frame)
+#         # Process the frame using YOLO
+#         processed_frame = process_frame_yolo(frame)
 
-        # Encode processed frame as JPEG
-        _, buffer = cv2.imencode('.jpg', processed_frame)
-        frame_base64 = base64.b64encode(buffer).decode('utf-8')
+#         # Encode processed frame as JPEG
+#         _, buffer = cv2.imencode('.jpg', processed_frame)
+#         frame_base64 = base64.b64encode(buffer).decode('utf-8')
 
-        # Emit the processed frame to the frontend
-        socketio.emit('video_stream', {'frame': frame_base64})
+#         # Emit the processed frame to the frontend
+#         socketio.emit('video_stream', {'frame': frame_base64})
 
-        # Add delay to control frame rate (30 FPS)
-        socketio.sleep(0.03)
+#         # Add delay to control frame rate (30 FPS)
+#         socketio.sleep(0.03)
 
 
 # Connects with frontend throgh socket io (Camera as device)
-@socketio.on('start_stream')
-def start_stream():
-    """Handle start streaming event."""
-    generate_processed_frames()
+# @socketio.on('start_stream')
+# def start_stream():
+#     """Handle start streaming event."""
+#     generate_processed_frames()
 
-# Function to handle connection out of socket disconnection/ failure
-@socketio.on('disconnect')
-def handle_disconnect():
-    """Handle client disconnect."""
-    print("Client disconnected")
+# # Function to handle connection out of socket disconnection/ failure
+# @socketio.on('disconnect')
+# def handle_disconnect():
+#     """Handle client disconnect."""
+#     print("Client disconnected")
 
 # Route for checking/testing the working of backend 
 @app.route('/')

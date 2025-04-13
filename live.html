@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Webcam Processing</title>
+</head>
+<body>
+
+<h2>Webcam Feed</h2>
+<video id="video" width="320" height="240" autoplay playsinline></video>
+
+<h3>Processed Image</h3>
+<img id="processed" width="320" height="240" />
+
+<canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+
+<script>
+  const video = document.getElementById('video');
+  const canvas = document.getElementById('canvas');
+  const processedImg = document.getElementById('processed');
+  const ctx = canvas.getContext('2d');
+
+  // Start webcam
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+      video.srcObject = stream;
+
+      // Once stream starts, begin sending frames every 500ms
+      setInterval(captureAndSendFrame, 100); // 2 FPS
+    })
+    .catch(error => {
+      console.error('Webcam error:', error);
+      alert('Could not access the webcam.');
+    });
+
+  function captureAndSendFrame() {
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    canvas.toBlob(blob => {
+      const formData = new FormData();
+      formData.append('image', blob, 'frame.png');
+
+      fetch('http://localhost:5000/upload-image', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.blob())
+      .then(processedBlob => {
+        processedImg.src = URL.createObjectURL(processedBlob);
+      })
+      .catch(err => {
+        console.error('Error sending/receiving image:', err);
+      });
+    }, 'image/png');
+  }
+</script>
+
+</body>
+</html>
