@@ -4,11 +4,20 @@ import base64  # For encoding video frames as base64 strings
 from flask import Flask, request, jsonify, send_file, send_from_directory  # For server and request handling
 from flask_socketio import SocketIO  # For enabling WebSockets for real-time streaming
 from flask_cors import CORS  # For allowing cross-origin requests
+from dotenv import load_dotenv
 
-# Initialize Flask application and enable CORS
-app = Flask(__name__)  # Create a Flask app instance
-CORS(app)  # Allow cross-origin requests for all routes
-socketio = SocketIO(app, cors_allowed_origins="*")  # Enable WebSockets and allow all origins to connect
+load_dotenv()
+
+frontend_url = os.getenv('FRONTEND_URL')
+
+# Initialize Flask app
+app = Flask(__name__)
+
+# Enable CORS for specific origin from .env
+CORS(app, origins=[frontend_url])
+
+# Setup SocketIO with same frontend origin
+socketio = SocketIO(app, cors_allowed_origins=[frontend_url])
 
 # Set up directories for uploads and results
 UPLOAD_FOLDER = 'uploads'  # Directory to store uploaded files

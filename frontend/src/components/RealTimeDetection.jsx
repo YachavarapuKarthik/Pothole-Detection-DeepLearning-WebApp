@@ -32,7 +32,7 @@ const RealTimeDetection = () => {
             const formData = new FormData();
             formData.append('image', blob, 'frame.png');
 
-            fetch('http://192.168.1.8:5000/upload-image', {
+            fetch('http://192.168.1.6:5000/upload-image', {
               method: 'POST',
               body: formData,
             })
