@@ -45,3 +45,4 @@ Users can upload images or videos, view real-time detection results, and analyze
 
 ---
 ### Looking to collab with this realtime project with an vehicle . Contact me about know more about this project
+## mail : karthikyacharapu@gmail.com
